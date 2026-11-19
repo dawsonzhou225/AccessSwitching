@@ -59,23 +59,47 @@ Requirements: numpy, scipy, matplotlib (Pillow for the GIF).  A 720-step run tak
 The schedule (`AT` in `model.py`): clocks from 150, the bits written until 180, votes and backups from 250,
 turn-taking from 300, the walk from 380.  Cuts remove whole blankets with their cells, never the organ's core.
 
-## What it found (seeds 0-2, 720 steps, cuts of 12 of 15 tissues at 420, 480 and 540)
+## What it can do
 
-| | result |
-|---|---|
-| the two bits | held in every run: random cuts, the whole inner ring cut three times, with and without turn-taking |
-| the position | error at 719, after three cuts while walking: at most 0.001 cycles |
-| which bit has access | read back from what the tissues sense, step by step: 97.6% right; averaged over time, each bit looks half there |
-| the rhythm (seed 0, no cuts; run before the last two changes, `run_all.sh` remakes it) | each bit stays on ~8 steps whatever the core's period (10, 17, 25); the switches lock to the core's phase best when one fits a cycle (R 0.80, 0.63, 0.40; not paced 0.03) |
-| a weakened bit | cutting only the inner ring: an epoch lasts as (strength of the bit that is off)^-1.00 +- 0.15 and (its own)^-0.02 +- 0.17, Levelt's second law |
+Seeds 0-2, 720 steps, cuts at 420, 480 and 540 unless noted.
 
-![Turn-taking](figures/turns.png)
-![Position](figures/position.png)
-![Levelt](figures/levelt.png)
+**Grow and repair.**  It grows from one cell into an organ of 16 tissues of 16 cells, every cell, tissue and
+the organ itself running the same free-energy step.  Each tissue works out which of two forms it belongs to
+and reshapes to match.  After losing most of its tissues it regrows by the same rules that built it.
 
-In the position figure the spikes during regrowth are a ring too sparse to read; the core's copy carries the
-position then.  The step-by-step readout is the analysis of Hesse et al. in miniature: averaged over time, the bit without
-access looks weakly present, as if it failed to ignite; read step by step, it is fully there in its own epochs.
+**Keep two bits through damage.**  Each bit is the way one ring's wave winds.  Both were held in every run:
+12 of the 15 tissues around the core cut at random three times, the whole inner ring cut three times, with
+turn-taking on and off.
+
+**Keep a position.**  Each wave's offset integrates a slow 2D walk.  After three cuts made while walking, the
+error at step 719 was at most 0.001 cycles.  The spikes during regrowth are a ring too sparse to read; the
+core's copy carries the position then.
+
+![Position error of each ring through three cuts while walking](figures/position.png)
+
+**Hold the memory in no tissue alone.**  A new tissue takes up its ring's wave from its neighbours, each tissue
+keeps a backup of the other ring's bit, and the core keeps a copy of each wave that holds a ring while it
+regrows.
+
+**Give one memory at a time access.**  One bit at a time is expressed in what the tissues emit, and the two
+take turns, straight through the cuts and the regrowth.  Which one has access can be read back step by step
+from what the tissues sense, right on 97.6% of steps; averaged over time, each looks about half present.
+That is the analysis of Hesse et al. in miniature: the memory without access looks weak on average, as if it
+failed to ignite, but is fully there in its own epochs.
+
+![Which memory has access, read back from what the tissues sense](figures/turns.png)
+
+**Keep time with the core's clock** (seed 0, no cuts; measured before the last two changes, `run_all.sh`
+remakes it).  When the core's clock paces the switching, the switches lock to its phase, best when one turn
+fits a cycle: R 0.80, 0.63 and 0.40 for periods of 10, 17 and 25 steps, against 0.03 unpaced.  Each memory
+still stays on about 8 steps whatever the period: the clock sets when switches happen, not how often.
+
+**Follow Levelt's second law.**  Cutting only the inner ring weakens one memory.  An epoch then lasts as
+(strength of the memory that is off)^-1.00 +- 0.15 and (its own)^-0.02 +- 0.17, as in binocular rivalry.
+This follows from the turn-taking rule, but nothing was tuned to produce it: the strengths are measured from
+how clearly each ring still shows its wave.
+
+![Epoch length against the strengths of the memories off and on](figures/levelt.png)
 
 ## Reproducibility
 
