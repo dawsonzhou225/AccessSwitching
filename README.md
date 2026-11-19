@@ -7,7 +7,7 @@ and gives one bit at a time access to what its tissues express.  The last part w
 (2026), who found that the same IT and PFC neurons switch between the seen and the suppressed face about
 15 times a second.
 
-![Two cuts of 12 of 16 tissues](figures/cuts.gif)
+![The two memories take turns while 12 of 16 tissues are cut away, twice](figures/switching.gif)
 
 ## The model in a few lines
 
