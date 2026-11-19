@@ -3,7 +3,7 @@
 A growing active-inference organ (a Python port of Palacios, Razi, Parr, Kirchhoff and Friston 2020, grown
 from one cell; see [Embryogenesis](https://github.com/dawsonzhou225/Embryogenesis)) that stores two bits and a
 position in the phase waves of its tissues' clocks, keeps them through repeated cuts of most of its tissues,
-and gives one bit at a time access to what its tissues express.  The last part was built after Hesse & Tsao
+and gives one bit at a time access to what its tissues express.  The last part was built after Hesse et al.
 (2026), who found that the same IT and PFC neurons switch between the seen and the suppressed face about
 15 times a second.
 
@@ -20,7 +20,8 @@ and gives one bit at a time access to what its tissues express.  The last part w
   wave, phase = offset + winding x angle about the core.
 - The bits: windings written at 150 (inner -1, outer +1), read back into each tissue's form, voted ring by
   ring; each tissue keeps a backup of the other ring's bit.  The position: a slow 2D walk added to each ring's
-  clocks, so each wave's offset integrates the path.
+  clocks, so each wave's offset integrates the path; the two offsets are a point on a torus that the walk
+  moves, as in a grid-cell module (Gardner et al. 2022).
 - Repair: a new tissue's clock starts on its ring's wave; the core keeps a copy of each wave (a phase-locked
   loop) that holds a ring while it regrows; the coupling only moves phase within a ring; a tissue that moves
   round the core takes on its wave's phase where it arrives.
@@ -73,7 +74,7 @@ turn-taking from 300, the walk from 380.  Cuts remove whole blankets with their 
 ![Levelt](figures/levelt.png)
 
 In the position figure the spikes during regrowth are a ring too sparse to read; the core's copy carries the
-position then.  The step-by-step readout is the analysis of Hesse & Tsao in miniature: averaged over time, the bit without
+position then.  The step-by-step readout is the analysis of Hesse et al. in miniature: averaged over time, the bit without
 access looks weakly present, as if it failed to ignite; read step by step, it is fully there in its own epochs.
 
 ## Reproducibility
@@ -91,4 +92,8 @@ self-organisation. *Journal of Theoretical Biology*, 486, 110089.
 Hohwy, J., Roepstorff, A., & Friston, K. (2008). Predictive coding explains binocular rivalry: an
 epistemological review. *Cognition*, 108(3), 687-701.
 
-Hesse, J., & Tsao, D. (2026). bioRxiv, doi:10.64898/2026.10.15.759299.
+Gardner, R. J., Hermansen, E., Pachitariu, M., Burak, Y., Baas, N. A., Dunn, B. A., Moser, M.-B., & Moser, E. I.
+(2022). Toroidal topology of population activity in grid cells. *Nature*, 602(7895), 123-128.
+
+Hesse, J. K., Lanfranchi, F. F., McGrory, C., Shi, Y., Engel, T. A., & Tsao, D. Y. (2026). Rapid alternation of
+conscious and suppressed stimulus representations in the primate brain. *bioRxiv*, doi:10.64898/2026.10.15.759299.
